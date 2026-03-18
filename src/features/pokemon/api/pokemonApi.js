@@ -1,0 +1,40 @@
+const BASE_URL = 'https://pokeapi.co/api/v2';
+
+export async function getPokemonList(limit = 151) {
+  const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
+  if (!res.ok) throw new Error('Error fetching pokemon list');
+  const data = await res.json();
+  return data.results;
+}
+
+export function getPokemonIdFromUrl(url) {
+  return url.split('/').filter(Boolean).pop();
+}
+
+export async function getPokemon(id) {
+  const res = await fetch(`${BASE_URL}/pokemon/${id}`);
+  if (!res.ok) throw new Error('Error fetching pokemon detail');
+  return res.json();
+}
+
+export async function getPokemonCards(limit = 151) {
+  const list = await getPokemonList(limit);
+
+  const detailed = await Promise.all(
+    list.map(async (pokemon) => {
+      const id = getPokemonIdFromUrl(pokemon.url);
+      const data = await getPokemon(id);
+
+      return {
+        id: data.id,
+        name: data.name,
+        image:
+          data.sprites.other['official-artwork'].front_default ||
+          data.sprites.front_default,
+        types: data.types.map((t) => t.type.name),
+      };
+    })
+  );
+
+  return detailed;
+}
