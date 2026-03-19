@@ -1,29 +1,15 @@
 
+import { usePokemonTypes } from '../hooks/usePokemons';
 
 function PokemonFilters({selectedType, onTypeChange }) {
     
-    const POKEMON_TYPES = [
-    'all',
-    'normal',
-    'fire',
-    'water',
-    'electric',
-    'grass',
-    'ice',
-    'fighting',
-    'poison',
-    'ground',
-    'flying',
-    'psychic',
-    'bug',
-    'rock',
-    'ghost',
-    'dragon',
-    'dark',
-    'steel',
-    'fairy',
-    ];
+    const { data: types = [], isLoading } = usePokemonTypes();
 
+    const POKEMON_TYPES = ['all', ...types];
+
+
+    if (isLoading) return <p>Loading types...</p>;
+    console.log(POKEMON_TYPES)
     return (
         <div className="mb-6 max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-3">
