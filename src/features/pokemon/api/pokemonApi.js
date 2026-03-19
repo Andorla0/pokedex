@@ -1,4 +1,4 @@
-const BASE_URL = 'https://pokeapi.co/api/v2';
+const BASE_URL = import.meta.env.VITE_POKEAPI_BASE_URL;
 
 export async function getPokemonList(limit = 151) {
   const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
