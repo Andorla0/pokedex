@@ -13,6 +13,13 @@ export async function getPokemon(id) {
   return res.json();
 }
 
+export async function getPokemonTypes() {
+  const res = await fetch(`${BASE_URL}/type`);
+  if (!res.ok) throw new Error('Error fetching pokemon types');
+  const data = await res.json();
+  return data.results.map((t) => t.name);
+}
+
 export async function getPokemonCards(limit = 151) {
   const list = await getPokemonList(limit);
 
