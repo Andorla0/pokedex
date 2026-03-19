@@ -1,9 +1,7 @@
 
-import { useState } from 'react';
 
-function PokemonFilters() {
+function PokemonFilters({selectedType, onTypeChange }) {
     
-    const [selectedType, setSelectedType] = useState('');
     const POKEMON_TYPES = [
     'all',
     'normal',
@@ -26,7 +24,6 @@ function PokemonFilters() {
     'fairy',
     ];
 
-    //TODO implement filter logic based on selectedType and pass it to PokemonList
     return (
         <div className="mb-6 max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-3">
@@ -38,7 +35,7 @@ function PokemonFilters() {
                 {POKEMON_TYPES.map((type) => (
                 <button
                     key={type}
-                    onClick={() => setSelectedType(type)}
+                    onClick={() => onTypeChange(type)}
                     className={`px-3 py-1 text-sm whitespace-nowrap rounded-full border-2 transition-all capitalize ${
                     selectedType === type
                         ? 'bg-gray-900 text-white border-gray-900'
