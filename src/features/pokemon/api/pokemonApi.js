@@ -7,10 +7,6 @@ export async function getPokemonList(limit = 151) {
   return data.results;
 }
 
-export function getPokemonIdFromUrl(url) {
-  return url.split('/').filter(Boolean).pop();
-}
-
 export async function getPokemon(id) {
   const res = await fetch(`${BASE_URL}/pokemon/${id}`);
   if (!res.ok) throw new Error('Error fetching pokemon detail');
@@ -22,8 +18,7 @@ export async function getPokemonCards(limit = 151) {
 
   const detailed = await Promise.all(
     list.map(async (pokemon) => {
-      const id = getPokemonIdFromUrl(pokemon.url);
-      const data = await getPokemon(id);
+      const data = await getPokemon(pokemon.name);
 
       return {
         id: data.id,
