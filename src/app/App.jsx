@@ -1,8 +1,13 @@
+import { Routes, Route } from "react-router"
 import PokedexPage from "../pages/pokedex/PokedexPage"
+import PokemonDetailsPage from "../pages/pokemon/PokemonDetailsPage"
 
 function App() {
   return (
-    <PokedexPage/>   
+    <Routes>
+      <Route path="/" element={<PokedexPage />} />
+      <Route path="/pokemon/:id" element={<PokemonDetailsPage/>} />
+    </Routes>
   )
 }
 
