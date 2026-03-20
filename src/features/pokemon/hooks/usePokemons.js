@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPokemonCards, getPokemonTypes } from '../api/pokemonApi';
+import { getPokemonCards, getPokemonTypes, getPokemon } from '../api/pokemonApi';
 
 export function usePokemons() {
   return useQuery({
@@ -12,5 +12,12 @@ export function usePokemonTypes() {
   return useQuery({
     queryKey: ['pokemonsTypes'],
     queryFn: () => getPokemonTypes(),
+  });
+}
+
+export function usePokemonDetail(id) {
+  return useQuery({
+    queryKey: ['pokemon', id],
+    queryFn: () => getPokemon(id),
   });
 }
