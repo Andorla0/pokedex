@@ -1,25 +1,27 @@
 
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
-
+import { Dropdown } from "primereact/dropdown";
 function PokedexHeader({pokemonCount, searchPokemon, onSearchChange}) {
 
     return (
 
-    <header className="w-full shadow-md bg-white ">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 p-2">
-            <div className="w-full p-5 flex flex-col gap-2">
+    <header className="w-full bg-[#de5239]">
+        {/* <div className="max-w-5xl mx-auto sm:px-6 md:px-10 lg:px-12 xl:px-16 p-2"> */}
+        <div className="max-w-5xl mx-auto sm:px-6 md:px-10 lg:px-12 xl:px-16 p-2">
+            <div className="w-full flex flex-col gap-2">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                    <h1 className="text-xl font-bold sm:text-2xl md:text-3xl">Pokedex</h1>
-                    <p className=" text-xs md:text-sm">
-                        A simple pokedex app built with React and PrimeReact :)
-                    </p>
+                        <h1 className="text-xl font-bold sm:text-2xl md:text-3xl text-white">Pokedex</h1>
+                        <p className=" text-xs md:text-sm text-[#ffd57b]">
+                            A simple pokedex app built with React and PrimeReact :)
+                        </p>
+                    
                     </div>
 
-                    <div className="sm:text-right">
+                    <div className="sm:text-right text-[#ffd57b]">
                     <p className="text-xs md:text-sm">Total Pokemon</p>
-                    <p className="text-xl font-bold sm:text-2xl md:text-3xl">{pokemonCount}</p>
+                    <p className="text-xl font-bold sm:text-2xl md:text-3xl text-white">{pokemonCount}</p>
                 </div>
             </div>
 
@@ -30,9 +32,9 @@ function PokedexHeader({pokemonCount, searchPokemon, onSearchChange}) {
                     value={searchPokemon}
                     onChange={(e)=> onSearchChange(e.target.value)}
                     placeholder="Search Pokemon by name"
-                    className="w-full bg-slate-100 text-slate-900 pl-4"
+                    className="w-full bg-[#fff8f0] text-[#3d1a00] pl-4"
                     />
-                    <Button icon="pi pi-search" className="bg-blue-400 border-blue-400" />
+                    <Button icon="pi pi-search" className="bg-[#ffad52] border-[#ffad52] " />
                 </div>
                 </div>
             </div>
