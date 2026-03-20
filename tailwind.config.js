@@ -5,7 +5,19 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        pokedex: {
+          bg:        "#fff8f0", // warm cream - page background
+          text:      "#3d1a00", // deep warm brown - body text
+          header:    "#de5239", // red-orange - header background
+          accent:    "#ffad52", // warm orange - buttons & active filters
+          hover:     "#ff9441", // bright orange - hover state
+          yellow:    "#ffd57b", // pale yellow - icons, subtitles, highlights
+          id:        "#de5239", // same as header - pokemon ID badges
+        },
+      },
+    },
   },
   plugins: [],
   corePlugins: {
