@@ -1,6 +1,6 @@
-import PokedexHeader from "../../features/pokemon/components/PokedexHeader"
-import PokemonFilters from "../../features/pokemon/components/PokemonFilters"
-import PokemonList from "../../features/pokemon/components/PokemonList"
+import PokedexHeader from "../../features/pokemon/components/pokedex/PokedexHeader"
+import PokemonFilters from "../../features/pokemon/components/pokedex/PokemonFilters"
+import PokemonList from "../../features/pokemon/components/pokedex/PokemonList"
 import { usePokemons } from '../../features/pokemon/hooks/usePokemons';
 import { useState, useMemo } from "react";
 
