@@ -5,9 +5,9 @@ function PokemonCard({id,name,image,types}) {
     
     return (
         <Link to={`/pokemon/${id}`} className="w-full">
-            <div className="group  bg-white rounded-2xl border border-gray-200 px-3 py-5 shadow-2xl hover:shadow-sm  transition-all duration-200 w-full">
+      <div className="group bg-white rounded-2xl border border-gray-100 px-3 py-5 shadow-sm hover:shadow-md transition-all duration-200 w-full">
             
-                <div className="flex justify-center items-center mb-4">
+        <div className="bg-pokedex-yellow/20 rounded-xl flex justify-center items-center mb-3 p-2 aspect-square">
                     <img
                     src={image}
                     alt={name}
@@ -15,22 +15,18 @@ function PokemonCard({id,name,image,types}) {
                     />
                 </div>
 
-                <p className="text-sm text-gray-400 text-center mb-1">
-                    #{id}
+        <p className="text-xs text-pokedex-header font-mono text-center mb-1">
+          #{String(id).padStart(3, '0')}
                 </p>
 
-                <h3 className="text-lg font-semibold text-gray-900 text-center capitalize mb-2">
+        <h3 className="text-base font-bold text-pokedex-text text-center capitalize mb-2 flex items-center justify-center gap-1">
+          <i className="pi pi-star-fill text-pokedex-yellow text-xs" />
                     {name}
                 </h3>
 
                 <div className="flex justify-center gap-2">
                     {types.map((type) => (
-                    <span
-                        key={type}
-                        
-                    >
-                        <PokemonTypeBadge type={type} />
-                    </span>
+            <PokemonTypeBadge key={type} type={type} />
                     ))}
                 </div>
 
