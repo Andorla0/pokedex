@@ -27,3 +27,6 @@ a {
   }
 }
 
+.p-progressbar-value {
+  background: #ffad52 !important;
+}
