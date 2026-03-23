@@ -1,6 +1,5 @@
 import { Link } from "react-router"
 import PokemonTypeBadge from "../ui/PokemonTypeBadge"
-
 function PokemonCard({id,name,image,types}) {
     
     return (
@@ -20,6 +19,8 @@ function PokemonCard({id,name,image,types}) {
                 </p>
 
                 <h3 className="text-lg font-semibold text-gray-900 text-center capitalize mb-2">
+                    <i className="fa-solid fa-paw text-base mr-1"/>
+                        
                     {name}
                 </h3>
 

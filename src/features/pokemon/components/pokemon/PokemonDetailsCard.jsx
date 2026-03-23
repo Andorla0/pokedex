@@ -1,4 +1,3 @@
-// PokemonDetailsCard.jsx
 import PokemonTypeBadge from '../ui/PokemonTypeBadge';
 
 function InfoBox({ label, value, icon, isSmall }) {
@@ -36,6 +35,7 @@ function PokemonDetailsCard({ pokemon }) {
             #{String(pokemon.id).padStart(3, '0')}
           </span>
           <h1 className="text-3xl font-bold capitalize text-pokedex-text tracking-tight">
+            <i className="fa-solid fa-paw text-2xl md:xl mr-1"/>
             {pokemon.name}
           </h1>
           <div className="flex gap-3 mt-1 flex-wrap">

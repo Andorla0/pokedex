@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router"
 import PokedexPage from "../pages/pokedex/PokedexPage"
 import PokemonDetailsPage from "../pages/pokemon/PokemonDetailsPage"
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   return (
