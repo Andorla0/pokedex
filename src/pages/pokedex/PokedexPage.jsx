@@ -27,7 +27,7 @@ function PokedexPage() {
                     searchPokemon={searchPokemon}
                     onSearchChange={setSearchPokemon}
                     />
-                    <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+                    <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 bg-pokedex-bg">
                             <PokemonFilters selectedType={selectedType} onTypeChange={setSelectedType} />
                         
                             <div className="flex items-center justify-between">

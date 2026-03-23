@@ -19,7 +19,11 @@ function PokedexHeader({pokemonCount, searchPokemon, onSearchChange}) {
 
                     <div className="sm:text-right text-pokedex-yellow">
                         <p className="text-xs md:text-sm">Total Pokemon</p>
-                        <p className="text-xl font-bold sm:text-2xl md:text-3xl text-white">{pokemonCount}</p>
+                        <span className="inline-flex items-center gap-1  bg-pokedex-yellow/10 px-3  rounded-lg ">
+                        <i className="pi pi-globe text-pokedex-accent text-xs md:text-xl" />
+                        <p className="text-lg font-bold sm:text-xl md:text-2xl text-white">{pokemonCount}</p>
+
+                        </span>
                     </div>
                 </div>
 
