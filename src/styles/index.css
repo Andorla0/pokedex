@@ -30,3 +30,11 @@ a {
 .p-progressbar-value {
   background: #ffad52 !important;
 }
+
+.p-datepicker-trigger {
+  @apply bg-pokedex-accent border-pokedex-accent;
+}
+
+.p-datepicker-trigger:hover {
+  @apply bg-pokedex-hover border-pokedex-hover;
+}
