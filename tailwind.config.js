@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         pokedex: {
-          bg:        "#fff8f0", // warm cream - page background
+          bg:        "#fff3e4", // warm cream - page background #faeee1 #fff8f0
           text:      "#3d1a00", // deep warm brown - body text
           header:    "#de5239", // red-orange - header background
           accent:    "#ffad52", // warm orange - buttons & active filters
