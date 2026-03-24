@@ -9,6 +9,7 @@ import 'primeicons/primeicons.css'
 
 import './styles/index.css'
 import App from './app/App.jsx'
+import { BrowserRouter } from 'react-router';
 
 
 const queryClient = new QueryClient({
@@ -22,10 +23,12 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}> 
-      <PrimeReactProvider value={{ ripple: true }}>
-        <App />
-      </PrimeReactProvider>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}> 
+        <PrimeReactProvider value={{ ripple: true }}>
+          <App />
+        </PrimeReactProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </StrictMode>,
 )

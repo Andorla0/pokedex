@@ -3,7 +3,42 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #root {
+  @apply min-h-screen m-0 p-0;
+  background-color: #fff3e4;
+}
 
 body {
   @apply font-mono text-sm;
+}
+
+a {
+  @apply no-underline;
+}
+
+@layer base {
+  :root {
+    --color-bg: #fff8f0;
+    --color-text: #3d1a00;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+}
+
+.p-progressbar-value {
+  background: #ffad52 !important;
+}
+
+.p-datepicker-trigger {
+  @apply bg-pokedex-accent border-pokedex-accent;
+}
+
+.p-datepicker-trigger:hover {
+  @apply bg-pokedex-hover border-pokedex-hover;
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+  @apply bg-pokedex-hover border-pokedex-accent text-white;
 }
