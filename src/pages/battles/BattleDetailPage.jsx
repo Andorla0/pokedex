@@ -10,7 +10,7 @@ import PokemonTypeBadge from '../../features/pokemon/components/ui/PokemonTypeBa
 import StatBar from '../../components/ui/StatBar';
 import InfoBox from '../../components/ui/InfoBox';
 import BattleDetailSkeleton from '../../features/battles/components/BattleDetailSkeleton';
-import { getPokemonStats } from '../../features/pokemon/utils/pokemonMappers';
+import { getPokemonStats } from '../../features/pokemon/utils/pokemonMappers';import { getPokemonStats } from '../../features/pokemon/api/pokemonApi';
 
 const MAX_POKEMON_STAT = 255;
 
