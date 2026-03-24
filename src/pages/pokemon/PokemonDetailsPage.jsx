@@ -45,11 +45,11 @@ function PokemonDetailsPage() {
       <div className="max-w-4xl mx-auto flex flex-col gap-4">
         <PokemonDetailsCard pokemon={pokemon} />
         <PokemonStatsCard pokemon={pokemon} />
-        <PokemonSightingsList sightings={sightings} pokemonName={pokemon.name}/>
         <PokemonSightingForm
           pokemonName={pokemon.name}
           onSightingAdded={(newSighting) => setSightings((prev) => [newSighting, ...prev])}
         />
+        <PokemonSightingsList sightings={sightings} pokemonName={pokemon.name}/>
       </div>
     </div>
   );
