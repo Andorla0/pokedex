@@ -1,64 +1,31 @@
-import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button } from 'primereact/button';
-import { ProgressBar } from 'primereact/progressbar';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { Skeleton } from 'primereact/skeleton';
 
-import { useDeleteBattle } from '../../features/battles/hooks/useBattles';
+import { useDeleteBattle, useBattle } from '../../features/battles/hooks/useBattles';
 import { usePokemonDetail } from '../../features/pokemon/hooks/usePokemons';
-import PokemonTypeBadge from '../../features/pokemon/components/ui/PokemonTypeBadge';
-import { useBattle } from '../../features/battles/hooks/useBattles';
 import { useDragonBallCharacter } from '../../features/dragonBall/hooks/useDragonBall';
 
-import {
-  calculateAverage,
-  getPokemonStats,
-  getDragonBallStats,
-  getBattleWinner,
-} from '../../features/battles/utils/battleStats';
+import PokemonTypeBadge from '../../features/pokemon/components/ui/PokemonTypeBadge';
+import StatBar from '../../components/ui/StatBar';
+import InfoBox from '../../components/ui/InfoBox';
+import BattleDetailSkeleton from '../../features/battles/components/BattleDetailSkeleton';
+
 
 const MAX_POKEMON_STAT = 255;
-const MAX_DB_STAT = 300;
 
-function StatBar({ label, value, max, color }) {
-  return (
-    <li className="list-none">
-      <div className="flex justify-between text-sm capitalize text-pokedex-text mb-1">
-        <span>{label.replace('-', ' ')}</span>
-        <span className="font-bold">{Math.round(value)}</span>
-      </div>
-      <ProgressBar
-        value={Math.round((value / max) * 100)}
-        showValue={false}
-        className="h-2"
-        style={{ '--p-progressbar-value-background': color }}
-      />
-    </li>
-  );
+function formatValue(value, fallback = 'Unknown') {
+  if (value === null || value === undefined || value === '') return fallback;
+  return value;
 }
 
-function BattleDetailSkeleton({ onBack }) {
-  return (
-    <div className="min-h-screen">
-      <header className="w-full bg-pokedex-header px-6 py-4 flex items-center gap-4">
-        <Button icon="pi pi-arrow-left" text className="text-white p-0" onClick={onBack} />
-        <Skeleton width="8rem" height="1.5rem" />
-      </header>
+function getPokemonStats(pokemon) {
+  if (!pokemon?.stats) return [];
 
-      <main className="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
-        <Skeleton height="16rem" className="rounded-[2rem]" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Skeleton height="14rem" className="rounded-[2rem]" />
-          <Skeleton height="14rem" className="rounded-[2rem]" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Skeleton height="3rem" className="rounded-full" />
-          <Skeleton height="3rem" className="rounded-full" />
-        </div>
-      </main>
-    </div>
-  );
+  return pokemon.stats.map((stat) => ({
+    name: stat.stat.name,
+    value: stat.base_stat,
+  }));
 }
 
 function BattleDetailPage() {
@@ -77,27 +44,7 @@ function BattleDetailPage() {
   );
 
   const isLoading = loadingBattle || loadingPokemon || loadingCharacter;
-
-  const pokemonStats = useMemo(() => getPokemonStats(pokemon), [pokemon]);
-  const dragonBallStats = useMemo(() => getDragonBallStats(character), [character]);
-
-  const pokemonAverage = useMemo(
-    () => calculateAverage(pokemonStats.map((stat) => stat.value)),
-    [pokemonStats]
-  );
-
-  const dragonBallAverage = useMemo(
-    () => calculateAverage(dragonBallStats.map((stat) => stat.value)),
-    [dragonBallStats]
-  );
-
-  const winner = useMemo(
-    () => getBattleWinner(pokemonAverage, dragonBallAverage),
-    [pokemonAverage, dragonBallAverage]
-  );
-
-  const pokemonWins = winner === 'pokemon';
-  const dragonBallWins = winner === 'dragonball';
+  const pokemonStats = getPokemonStats(pokemon);
 
   const handleDelete = () => {
     confirmDialog({
@@ -132,7 +79,9 @@ function BattleDetailPage() {
 
         <main className="max-w-2xl mx-auto px-4 py-12">
           <div className="bg-white rounded-[2rem] shadow-sm p-8 text-center">
-            <h2 className="text-xl font-bold text-pokedex-text">This battle does not exist.</h2>
+            <h2 className="text-xl font-bold text-pokedex-text">
+              This battle does not exist.
+            </h2>
             <p className="text-pokedex-text/60 mt-2">
               It may have been deleted or the URL is invalid.
             </p>
@@ -146,6 +95,9 @@ function BattleDetailPage() {
       </div>
     );
   }
+
+  const transformationsCount = character?.transformations?.length ?? 0;
+  const originPlanetName = character?.originPlanet?.name ?? 'Unknown';
 
   return (
     <div className="min-h-screen">
@@ -163,16 +115,13 @@ function BattleDetailPage() {
 
       <main className="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
         <div className="bg-white rounded-[2.5rem] shadow-md p-6 flex items-stretch gap-4">
-          <div
-            className={`flex-1 flex flex-col items-center gap-2 rounded-2xl p-4 transition-all ${
-              pokemonWins ? 'bg-pokedex-accent/20 ring-2 ring-pokedex-accent' : 'bg-pokedex-yellow/20'
-            }`}
-          >
+          <div className="flex-1 flex flex-col items-center gap-2 rounded-2xl p-4 bg-pokedex-yellow/20">
             <img
               src={battle.pokemonImage}
               alt={battle.pokemonName}
               className="w-24 h-24 object-contain drop-shadow-md"
             />
+
             <span className="font-bold capitalize text-pokedex-text text-lg text-center">
               {battle.pokemonName}
             </span>
@@ -184,14 +133,8 @@ function BattleDetailPage() {
             </div>
 
             <span className="text-xs text-pokedex-text/50 mt-1">
-              Avg stat: {pokemonAverage}
+              Pokémon fighter
             </span>
-
-            {pokemonWins && (
-              <span className="bg-pokedex-header text-white text-xs px-3 py-0.5 rounded-full flex items-center gap-1 font-bold mt-1">
-                <i className="pi pi-trophy text-xs" /> Winner
-              </span>
-            )}
           </div>
 
           <div className="flex items-center">
@@ -200,55 +143,42 @@ function BattleDetailPage() {
             </div>
           </div>
 
-          <div
-            className={`flex-1 flex flex-col items-center gap-2 rounded-2xl p-4 transition-all ${
-              dragonBallWins ? 'bg-pokedex-accent/20 ring-2 ring-pokedex-accent' : 'bg-pokedex-yellow/20'
-            }`}
-          >
+          <div className="flex-1 flex flex-col items-center gap-2 rounded-2xl p-4 bg-pokedex-yellow/20">
             <img
               src={battle.characterImage}
               alt={battle.characterName}
               className="w-24 h-24 object-contain drop-shadow-md"
             />
+
             <span className="font-bold text-pokedex-text text-lg text-center">
               {battle.characterName}
             </span>
 
-            {character?.affiliation && (
+            {character?.race && (
               <span className="text-xs text-pokedex-header font-medium">
+                {character.race}
+              </span>
+            )}
+
+            {character?.affiliation && (
+              <span className="text-xs text-pokedex-text/60 text-center">
                 {character.affiliation}
               </span>
             )}
 
-            {character?.maxKi && (
-              <span className="text-xs text-pokedex-text/50">
-                Ki: {String(character.maxKi)}
-              </span>
-            )}
-
             <span className="text-xs text-pokedex-text/50 mt-1">
-              Avg stat: {dragonBallAverage}
+              Dragon Ball fighter
             </span>
-
-            {dragonBallWins && (
-              <span className="bg-pokedex-header text-white text-xs px-3 py-0.5 rounded-full flex items-center gap-1 font-bold mt-1">
-                <i className="pi pi-trophy text-xs" /> Winner
-              </span>
-            )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div
-            className={`bg-white rounded-[2rem] shadow-sm p-6 flex flex-col gap-3 ${
-              pokemonWins ? 'ring-2 ring-pokedex-accent' : ''
-            }`}
-          >
+          <div className="bg-white rounded-[2rem] shadow-sm p-6 flex flex-col gap-3">
             <h3 className="font-bold text-pokedex-text flex items-center gap-2">
               <img src={battle.pokemonImage} alt="" className="w-6 h-6 object-contain" />
               <span className="capitalize">{battle.pokemonName}</span>
-              {pokemonWins && <i className="pi pi-trophy text-pokedex-accent ml-auto" />}
             </h3>
+
 
             <ul className="flex flex-col gap-3 p-0 m-0">
               {pokemonStats.map((stat) => (
@@ -263,28 +193,34 @@ function BattleDetailPage() {
             </ul>
           </div>
 
-          <div
-            className={`bg-white rounded-[2rem] shadow-sm p-6 flex flex-col gap-3 ${
-              dragonBallWins ? 'ring-2 ring-pokedex-accent' : ''
-            }`}
-          >
+          <div className="bg-white rounded-[2rem] shadow-sm p-6 flex flex-col gap-4">
             <h3 className="font-bold text-pokedex-text flex items-center gap-2">
               <img src={battle.characterImage} alt="" className="w-6 h-6 object-contain" />
               <span>{battle.characterName}</span>
-              {dragonBallWins && <i className="pi pi-trophy text-pokedex-accent ml-auto" />}
             </h3>
 
-            <ul className="flex flex-col gap-3 p-0 m-0">
-              {dragonBallStats.map((stat) => (
-                <StatBar
-                  key={stat.name}
-                  label={stat.name}
-                  value={stat.value}
-                  max={MAX_DB_STAT}
-                  color="#de5239"
-                />
-              ))}
-            </ul>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <InfoBox label="Race" value={formatValue(character?.race)} />
+              <InfoBox label="Gender" value={formatValue(character?.gender)} />
+              <InfoBox label="Affiliation" value={formatValue(character?.affiliation)} />
+              <InfoBox label="Origin Planet" value={originPlanetName} />
+              <InfoBox label="Ki" value={formatValue(character?.ki)} />
+              <InfoBox label="Max Ki" value={formatValue(character?.maxKi)} />
+              <InfoBox
+                label="Transformations"
+                value={transformationsCount}
+                className="sm:col-span-2"
+              />
+            </div>
+
+            {character?.description && (
+              <InfoBox
+                label="Description"
+                value={character.description}
+                valueClassName="text-sm font-normal leading-relaxed block"
+              />
+            )}
           </div>
         </div>
 
