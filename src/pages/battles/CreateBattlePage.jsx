@@ -39,8 +39,8 @@ function CreateBattlePage() {
   } = useForm({
     resolver: zodResolver(battleSchema),
     defaultValues: {
-      pokemonId: undefined,
-      dragonBallId: undefined,
+      pokemonId: null,
+      dragonBallId: null,
       name: '',
     },
   });
