@@ -1,19 +1,12 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Calendar } from 'primereact/calendar';
 import { FloatLabel } from 'primereact/floatlabel';
 import { useCreateSighting } from '../../hooks/useSightings';
-
-const schema = z.object({
-  trainerName: z.string().min(2, "Name must be at least 2 characters"),
-  location:    z.string().min(3, "Location is required"),
-  date:        z.date({ required_error: "Date is required" }),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-});
+import { sightingSchema } from '../../schemas/sightingSchema';
 
 function FieldError({ error }) {
   if (!error) return null;
@@ -24,7 +17,7 @@ function PokemonSightingForm({ pokemonName, onSightingAdded }) {
   const { mutate, isPending } = useCreateSighting();
 
   const { register, handleSubmit, reset, control, formState: { errors } } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(sightingSchema),
   });
 
   const onSubmit = (data) => {
@@ -53,7 +46,7 @@ function PokemonSightingForm({ pokemonName, onSightingAdded }) {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-{/* pi-map-marker */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-row p-inputgroup">
             <span className="p-inputgroup-addon bg-pokedex-accent">
