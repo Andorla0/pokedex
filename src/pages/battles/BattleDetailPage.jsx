@@ -10,22 +10,13 @@ import PokemonTypeBadge from '../../features/pokemon/components/ui/PokemonTypeBa
 import StatBar from '../../components/ui/StatBar';
 import InfoBox from '../../components/ui/InfoBox';
 import BattleDetailSkeleton from '../../features/battles/components/BattleDetailSkeleton';
-
+import { getPokemonStats } from '../../features/pokemon/api/pokemonApi';
 
 const MAX_POKEMON_STAT = 255;
 
 function formatValue(value, fallback = 'Unknown') {
   if (value === null || value === undefined || value === '') return fallback;
   return value;
-}
-
-function getPokemonStats(pokemon) {
-  if (!pokemon?.stats) return [];
-
-  return pokemon.stats.map((stat) => ({
-    name: stat.stat.name,
-    value: stat.base_stat,
-  }));
 }
 
 function BattleDetailPage() {
