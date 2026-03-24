@@ -20,15 +20,6 @@ export async function getPokemonTypes() {
   return data.results.map((t) => t.name);
 }
 
-export function getPokemonStats(pokemon) {
-  if (!pokemon?.stats) return [];
-
-  return pokemon.stats.map((stat) => ({
-    name: stat.stat.name,
-    value: stat.base_stat,
-  }));
-}
-
 export async function getPokemonCards(limit = 151) {
   const list = await getPokemonList(limit);
 
