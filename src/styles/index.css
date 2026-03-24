@@ -38,3 +38,7 @@ a {
 .p-datepicker-trigger:hover {
   @apply bg-pokedex-hover border-pokedex-hover;
 }
+
+.p-paginator .p-paginator-page.p-highlight {
+  @apply bg-pokedex-hover border-pokedex-accent text-white;
+}
